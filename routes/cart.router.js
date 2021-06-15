@@ -1,6 +1,9 @@
 const express = require('express');
 const router = express.Router();
 const { Cart } = require('../models/cart.model');
+const verifyRequest = require("../utils/verifyRequest");
+
+router.use(verifyRequest);
 
 router.route('/')
   .post(async (req, res) => {
@@ -28,11 +31,11 @@ router.route('/:userId/:productId')
     }
   })
 
-  router.route('/:userId')
+router.route('/:userId')
   .get(async (req, res) => {
     const { userId } = req.params;
     try {
-      const userCart = await Cart.find({owner: {_id: userId}}).populate('product').exec()
+      const userCart = await Cart.find({ owner: { _id: userId } }).populate('product').exec()
       res.json({ success: true, cart: userCart, message: 'Quantity updated' })
     } catch (error) {
       console.log(error);

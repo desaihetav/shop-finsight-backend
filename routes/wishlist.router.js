@@ -1,6 +1,9 @@
 const express = require('express');
 const router = express.Router();
 const { Wishlist } = require('../models/wishlist.model');
+const verifyRequest = require("../utils/verifyRequest");
+
+router.use(verifyRequest);
 
 router.route('/:userId/:productId')
   .post(async (req, res) => {
